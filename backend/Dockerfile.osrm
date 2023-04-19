@@ -1,0 +1,31 @@
+# Use the official OSRM backend image
+FROM osrm/osrm-backend:v5.25.0
+
+# Set the working directory
+WORKDIR /data
+
+# Install wget
+RUN apt-get update && \
+    apt-get install -y wget && \
+    rm -rf /var/lib/apt/lists/*
+
+# Replace "YOUR_REGION" with the desired region (e.g., "north-america", "europe", "asia") and
+# "YOUR_COUNTRY" with the desired country (e.g., "us", "germany", "japan")
+ENV REGION europe
+ENV COUNTRY sweden
+
+# Download the desired OSM PBF data file
+RUN wget "http://download.geofabrik.de/${REGION}/${COUNTRY}-latest.osm.pbf"
+
+# Pre-process the OSM data
+RUN osrm-extract -p /opt/car.lua "${COUNTRY}-latest.osm.pbf"
+
+# Partition and customize the extracted data
+RUN osrm-partition "${COUNTRY}-latest.osrm"
+RUN osrm-customize "${COUNTRY}-latest.osrm"
+
+# Expose the OSRM API port
+EXPOSE 5000
+
+# Start the OSRM server
+CMD ["osrm-routed", "--algorithm", "mld", "/data/${COUNTRY}-latest.osrm"]

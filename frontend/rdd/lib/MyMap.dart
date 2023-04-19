@@ -11,6 +11,7 @@ class MyMap extends StatefulWidget {
 class _MyMapState extends State<MyMap> {
   final Location _location = Location();
   late LatLng _currentLocation;
+  LatLng? __currentLocation;
 
   @override
   void initState() {
@@ -23,14 +24,16 @@ class _MyMapState extends State<MyMap> {
     setState(() {
       _currentLocation =
           LatLng(locationData.latitude!, locationData.longitude!);
+      __currentLocation =
+          LatLng(locationData.latitude!, locationData.longitude!);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _currentLocation == null
-          ? Center(child: CircularProgressIndicator())
+      body: __currentLocation == null
+          ? const Center(child: CircularProgressIndicator())
           : FlutterMap(
               options: MapOptions(
                 center: _currentLocation,
@@ -49,7 +52,7 @@ class _MyMapState extends State<MyMap> {
                       height: 80.0,
                       point: _currentLocation,
                       builder: (ctx) => Container(
-                        child: Icon(Icons.location_on),
+                        child: const Icon(Icons.location_on),
                       ),
                     ),
                   ],
