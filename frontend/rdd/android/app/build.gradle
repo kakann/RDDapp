@@ -33,6 +33,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    aaptOptions {
+            noCompress 'tflite'
+            noCompress 'lite'
+        }
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -58,6 +62,8 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            shrinkResources false
+            minifyEnabled false
         }
     }
 }
