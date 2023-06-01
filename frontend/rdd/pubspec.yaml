@@ -47,6 +47,8 @@ dependencies:
   tflite_flutter: ^0.9.5
   flutter_pytorch: ^1.0.1
   flutter_vision: ^1.1.1
+  geocoding: ^2.1.0
+  permission_handler: ^10.2.0
 
 
 
