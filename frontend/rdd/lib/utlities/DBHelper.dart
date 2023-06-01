@@ -117,10 +117,12 @@ class DBHelper {
         var stringBboxes = img['bboxes'].split(";");
         //print(stringBboxes);
         List<Map<String, dynamic>> bboxes = [];
-        print(stringBboxes);
-        for (var box in stringBboxes) {
-          Map<String, dynamic> bbox = json.decode(box);
-          bboxes.add(bbox);
+
+        if (stringBboxes[0] != "") {
+          for (var box in stringBboxes) {
+            Map<String, dynamic> bbox = json.decode(box);
+            bboxes.add(bbox);
+          }
         }
 
         return CapturedImage(

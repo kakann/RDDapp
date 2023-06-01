@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:rdd/objects/capturedImageList.dart';
 import 'package:rdd/utlities/DBHelper.dart';
 import 'package:intl/intl.dart';
+import 'package:rdd/widgets/DetailedViewScreen.dart';
 
 class MyListScreen extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class MyListScreen extends StatefulWidget {
 
 class _MyListScreenState extends State<MyListScreen> {
   @override
+  double totalKmTravelled = 0;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +54,11 @@ class _MyListScreenState extends State<MyListScreen> {
                       elevation: 5,
                       child: InkWell(
                         onTap: () {
-                          // Navigate to detail view or perform any other action on tap
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DetailedViewScreen(
+                                capturedImageList: list,
+                                totalKmTravelled: totalKmTravelled),
+                          ));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -99,6 +105,7 @@ class _MyListScreenState extends State<MyListScreen> {
                                       } else if (snapshot.hasError) {
                                         return Text('Error: ${snapshot.error}');
                                       } else {
+                                        totalKmTravelled = snapshot.data!;
                                         return Text(
                                             'Km: ${snapshot.data?.toStringAsFixed(2)}');
                                       }

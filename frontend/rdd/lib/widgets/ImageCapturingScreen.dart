@@ -113,6 +113,14 @@ class _ImageCapturingScreenState extends State<ImageCapturingScreen> {
     }
   }
 
+  Future<Uint8List?> getXFileBytes(XFile xfile) async {
+    if (xfile != null) {
+      Uint8List bytes = await xfile.readAsBytes();
+      return bytes;
+    }
+    return null;
+  }
+
   void _startCapturing() async {
     await _initializeControllerFuture;
     setState(() {
@@ -144,12 +152,14 @@ class _ImageCapturingScreenState extends State<ImageCapturingScreen> {
         //print(byteList);
         //print("CORES:");
         //print(nrCores);
+        Uint8List? img = await getXFileBytes(image);
+
         List<Map<String, dynamic>> bboxes = await vision.yoloOnImage(
-            bytesList: byteList,
-            imageHeight: 600,
-            imageWidth: 800,
-            iouThreshold: 0.5,
-            confThreshold: 0.25);
+            bytesList: img!,
+            imageHeight: 720,
+            imageWidth: 480,
+            iouThreshold: 0.3,
+            confThreshold: 0.3);
         stopwatch.stop();
         print('Elapsed time: ${stopwatch.elapsedMilliseconds} ms');
         //print(bboxes);
