@@ -75,6 +75,12 @@ class CapturedImageList {
   Map<String, double> getRoadQualityScores() {
     Map<String, double> roadQualityScores = {};
 
+    /*
+    Different damages have different weights. The size of the damage is also weighted against the confidence of the prediction.
+
+    so that for each location:
+    */
+
     // Define weights for each damage class.
     Map<String, double> damageWeights = {
       'D40': 1.5, // Assuming these are more severe.
