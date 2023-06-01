@@ -72,7 +72,7 @@ class CapturedImageList {
     return width * height;
   }
 
-  Map<String, double> getRoadQualityScores(List<CapturedImage> images) {
+  Map<String, double> getRoadQualityScores() {
     Map<String, double> roadQualityScores = {};
 
     // Define weights for each damage class.
