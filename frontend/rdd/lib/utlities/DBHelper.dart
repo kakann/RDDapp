@@ -137,8 +137,18 @@ class DBHelper {
       // Add the image list to the list of image lists.
       CapturedImageList imageList = CapturedImageList();
       imageList.images = images;
-      imageList.setStartLocality(list['start_locality']);
-      imageList.setEndLocality(list['end_locality']);
+      //Note, sometimes start and end locality is null, idk why
+      if (list["start_locality"] == null) {
+        imageList.setStartLocality("Unknown");
+      } else {
+        imageList.setStartLocality(list['start_locality']);
+      }
+      if (list['end_locality'] == null) {
+        imageList.setEndLocality("Unknown");
+      } else {
+        imageList.setEndLocality(list['end_locality']);
+      }
+
       imageList.date = DateTime.parse(list['created_at']);
       imageLists.add(imageList);
     }

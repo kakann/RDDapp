@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_vision/flutter_vision.dart';
 import 'package:rdd/objects/capturedImageList.dart';
 import 'package:rdd/utlities/DBHelper.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +15,21 @@ class MyListScreen extends StatefulWidget {
 }
 
 class _MyListScreenState extends State<MyListScreen> {
+  FlutterVision vision = FlutterVision();
+  int nrCores = 1;
+
+  @override
+  void initState() {
+    nrCores = Platform.numberOfProcessors;
+
+    vision.loadYoloModel(
+        modelPath: "assets/yolov8m.tflite",
+        labels: "assets/labels.txt",
+        modelVersion: "yolov8",
+        numThreads: nrCores);
+    super.initState();
+  }
+
   @override
   double totalKmTravelled = 0;
   Widget build(BuildContext context) {

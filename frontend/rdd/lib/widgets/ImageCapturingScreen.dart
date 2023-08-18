@@ -140,12 +140,7 @@ class _ImageCapturingScreenState extends State<ImageCapturingScreen> {
         final latitude = position.latitude;
         final longitude = position.longitude;
         final speed = position.speed;
-        //print(position);
-        //print(speed);
-        //print(image.path);
 
-        Uint8List byteList =
-            await loadImageAsByteList("assets/Sweden_000047.jpg");
         Stopwatch stopwatch = Stopwatch();
         getImageDimensions();
         stopwatch.start();
@@ -153,9 +148,11 @@ class _ImageCapturingScreenState extends State<ImageCapturingScreen> {
         //print("CORES:");
         //print(nrCores);
         Uint8List? img = await getXFileBytes(image);
+        Uint8List byteList =
+            await loadImageAsByteList("assets/Sweden_000047.jpg");
 
         List<Map<String, dynamic>> bboxes = await vision.yoloOnImage(
-            bytesList: img!,
+            bytesList: byteList, //img!,
             imageHeight: 720,
             imageWidth: 480,
             iouThreshold: 0.3,
@@ -166,7 +163,7 @@ class _ImageCapturingScreenState extends State<ImageCapturingScreen> {
 
         // Create a CapturedImage object and add it to the CapturedImageList
         final capturedImage = CapturedImage(
-            imagePath: image.path,
+            imagePath: "assets/Sweden_000047.jpg", //image.path,
             latitude: latitude,
             longitude: longitude,
             speed: speed,
