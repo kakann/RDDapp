@@ -98,7 +98,8 @@ Future<Uint8List> loadImageAsByteList(String imagePath) async {
 }
 
 Future<ui.Image> loadImage(String imagePath) async {
-  final Uint8List data = await File(imagePath).readAsBytes();
+  final Uint8List data = await File(imagePath)
+      .readAsBytes(); //change if static image is to be loaded or dynamic image
   //Uint8List data = await loadImageAsByteList("assets/Sweden_000047.jpg");
   final Completer<ui.Image> completer = Completer();
   ui.decodeImageFromList(data, (ui.Image img) {
